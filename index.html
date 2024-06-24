@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awareness and Prevention</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <script>
+    function getSGTTime() {
+      const date = new Date();
+      const options = { timeZone: 'Asia/Singapore', hour12: false };
+      return date.toLocaleString('en-US', options);
+    }
+    function trackPageAccess() {
+      const data = {
+      url: window.location.href,
+      timestamp: getSGTTime()
+    };
+
+  fetch('https://api.jsonbin.io/v3/b/6654367ae41b4d34e4fa0f1b/latest', {
+    method: 'GET',
+    headers: {
+      'X-Master-Key': '$2a$10$nJCRylKfYSjg9QTOXnFxk.dapRxgThuBniB3/eLYVMH6OmXKpZL6m'
+    }
+  })
+  .then(response => response.json())
+  .then(json => {
+    const existingData = json.record.records || [];
+    existingData.push(data);
+    return fetch('https://api.jsonbin.io/v3/b/6654367ae41b4d34e4fa0f1b', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': '$2a$10$nJCRylKfYSjg9QTOXnFxk.dapRxgThuBniB3/eLYVMH6OmXKpZL6m'
+      },
+      body: JSON.stringify({ records: existingData })
+    });
+  })
+  .then(response => response.json())
+  .then(json => console.log(json))
+  .catch(err => console.error('Error:', err));
+}
+
+document.addEventListener("DOMContentLoaded", trackPageAccess);
+</script>
+</head>
+<body>
+  <div class="container">
+      <h1>Is this a site you expected?</h1>
+      <p>Don't worry, this is just an educational phishing exercise campaign conducted by the Ngee Ann Poly Capstone Group. Here are some steps you can take to protect yourself and prevent future attempts.</p>
+
+      <h2>What You Can Do</h2>
+      <ul>
+          <li><strong>Update Your Passwords</strong>
+              <p>Change passwords for any compromised accounts. Use strong, unique passwords for each account. Consider using a password manager to help you create and store secure passwords.</p>
+          </li>
+          <li><strong>Enable Two-Factor Authentication (2FA)</strong>
+              <p>Add an extra layer of security by enabling 2FA on your accounts. This often involves receiving a code on your phone or email that you must enter in addition to your password.</p>
+          </li>
+          <li><strong>Scan for Malware</strong>
+              <p>Use a reputable antivirus or anti-malware software to scan your computer or mobile device for any malicious software that might have been installed.</p>
+          </li>
+      </ul>
+
+      <h2>Prevent Future Attempts</h2>
+      <ul>
+          <li><strong>Be Cautious with Unsolicited Emails and Messages</strong>
+              <p>Avoid clicking on links or download attachments from unknown or unexpected sources. Phishing often occrus via email, SMS, or social media messages.</p>
+          </li>
+          <li><strong>Verify the Senders</strong>
+              <p>Check the email address or phone number of the sender. Be cautious if it looks suspicious or doesn't match the company's official contact information.</p>
+          </li>
+          <li><strong>Watch for Red Flags</strong>
+              <p>Look out for generic greetings, spelling and grammar mistakes, urgent requests for personal information, and suspicious-looking links.</p>
+          </li>
+          <li><strong>Use Official Websites</strong>
+              <p>Instead of clicking on links in emails or messages, manually type the URL of the official website into your browser.</p>
+          </li>
+          <li><strong>Stay Informed</strong>
+              <p>Stay informed about the latest phishing tactics and scams. Knowledge is your best defense against cyber threats.</p>
+          </li>
+      </ul> 
+
+      <h2>Helpful Resources</h2>
+      <ul class="resources">
+          <li><a href="https://staysafeonline.org/theft-fraud-cybercrime/phishing/" target="_blank">Stay Safe Online: Phishing</a></li>
+          <li><a href="https://support.microsoft.com/en-us/windows/protect-yourself-from-phishing-0c7ea947-ba98-3bd9-7184-430e1f860a44" target="_blank">Microsoft: How to Recognize Phishing Emails and Links</a></li>
+          <li><a href="https://www.phishing.org/what-is-phishing" target="_blank">Phishing.org: What is Phishing?</a></li>
+      </ul>
+
+      <p>Stay safe and vigilant!</p>
+  </div>
+</body>
+</html>
